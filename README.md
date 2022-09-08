@@ -1,8 +1,35 @@
 # SegreteriaUniNoi
 
+Lo scopo dell’applicazione realizzata è quello di presentare una piattaforma che permetta le comunicazioni fra studenti e il personale della segreteria di un’eventuale Università. È stato utilizzato il linguaggio di programmazione Java per poter sfruttare al meglio il paradigma della programmazione a oggetti, che ha agevolato la realizzazione dell’intera applicazione.
+
+## Programmazione a oggetti
+
+Come accennato, nella realizzazione sono stati utilizzati alcune caratteristiche della programmazione a oggetti, a partire dalla creazione di classi e relative figlie e metodi, l’overloading (ovvero la possibilità di instanziare un oggetto potendo variare il numero di parametri d’ingresso), l’override (ovvero la possibilità di modificare il comportamento di un metodo a partire da uno base) e l’interfacciamento con Maven.
+
+## Maven
+
+La possibilità più importante della programmazione a oggetti è sicuramente quella di sfruttare codice altrui per non dover realizzare nuovamente una o più funzioni. L’utilizzo del repository Maven per Java ha facilitato ulteriormente quest’operazione, in quanto non è più necessario, come in passato, dover reperire il file .jar e installarlo ma basta inserire una “dependency” nel file di configurazione denominato “pom”. Una volta inserite tutte le dipendenze necessarie, è sufficiente far partire la routine di Maven che una volta terminata fornirà un package, nel quale saranno presenti tutti i metodi richiesti.
+
+## Database
+
+Per conservare sia i dati d’accesso degli utenti, sia le richieste effettuate e le relative risposte, si è deciso di utilizzare un semplice database relazionale, di tipo MySQL o MariaDB. L’interfacciamento con Java è stato reso agevole dal driver JDBC, messo a disposizione da Oracle sul repository ufficiale di Maven. Nello specifico, si è instanziato un database in locale, in maniera da facilitare e velocizzare le operazioni. Viene anche utilizzato un file di configurazione XML dove sono stati inseriti i parametri per potersi interfacciare al Database. Ciò è stato fatto per poter utilizzare un qualsiasi Database (e di conseguenza cambiarlo) senza dover modificare il codice Java, per una maggiore sicurezza.
+
+## XML
+
+Anche per quanto riguarda l’utilizzo di XML si è importata la dependency JDOM, anch’essa presente sul repository Maven. Si è preferito utilizzare JDOM rispetto a DOM e SAX perché esso rappresenta un’evoluzione rispetto agli ultimi due, prendendo il meglio da entrambi per quanto riguarda parsing e ricerca.
+
+## Client-Server
+
+Naturalmente il funzionamento dell’applicazione è dipendente da un’architettura client server, dove il Server è la macchina dove giace il Db e che realizza le query, mentre il client può essere una qualsiasi altra macchina tramite la quale lo studente o il membro della segreteria può interagire. Per realizzare ciò, sono stati utilizzati i metodi built-in di java ServerSocket. Viene dunque stabilita una connessione TCP al Server. Per facilità di realizzazione, nel test dell’applicazione il Server e il Client erano la stessa macchina: nel codice, infatti, viene stabilita una connessione all’indirizzo di loopback su due porte differenti. In un utilizzo reale dell’applicazione, è sufficiente modificare l’indirizzo IP al quale connettersi.
+
+## Multithreading
+
+Per poter permettere a più utenti di usufruite contemporaneamente del servizio, è stato necessario implementare il multithreading. Ogni volta che un nuovo utente si collega, viene creato un thread sulla porta adibita, in maniera che ogni esecuzione sia totalmente indipendente dall’altra per garantire la privacy e il corretto funzionamento. Nell’app ciò è stato realizzato mediante l’interfaccia Runnable. Sarebbe stato possibile estendere la classe Thread ma si è preferito il primo approccio poiché, in futuro, potrebbe essere necessario estendere un’altra classe (Java, infatti, non permette che una classe sia estensione di più classi).
 
 
 ## UML
+Al fine di dare una panoramica visiva di tutti le classi, i metodi e le dipendenze che costituiscono l’applicazione si è realizzata una rappresentazione in UML mostrata in seguito:
+
 - Java classes diagram
 ![mysqlconnector5](https://user-images.githubusercontent.com/95317308/188880391-b6c7a1d6-069a-42d6-a578-e206bcc65946.png)
 
