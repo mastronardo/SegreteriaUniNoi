@@ -1,0 +1,5 @@
+digraph "org.example:MySQLConnector:jar:1.0" { 
+	"org.example:MySQLConnector:jar:1.0" -> "mysql:mysql-connector-java:jar:8.0.30:compile" ; 
+	"org.example:MySQLConnector:jar:1.0" -> "org.apache.commons:commons-lang3:jar:3.12.0:compile" ; 
+	"mysql:mysql-connector-java:jar:8.0.30:compile" -> "com.google.protobuf:protobuf-java:jar:3.19.4:compile" ; 
+ } 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <infos>
+<address>
+    localhost
+</address>
+<port>
+    3306
+</port>
+<databasename>
+    my_segreteriauninoi
+</databasename>
+<username>
+    root
+    </username>
+<password>
+    
+</password>
+</infos>
+</project>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <infos>
+<ip>127.0.0.1</ip>
+<studentport>
+    6569
+</studentport>
+<memberport>
+    6869
+</memberport>    
+</infos>
+</project>
