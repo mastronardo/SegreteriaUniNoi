@@ -4,7 +4,7 @@ Lo scopo dell’applicazione realizzata è quello di presentare una piattaforma 
 
 ## Programmazione a oggetti
 
-Come accennato, nella realizzazione sono stati utilizzati alcune caratteristiche della programmazione a oggetti, a partire dalla creazione di classi e relative figlie e metodi, l’overloading (ovvero la possibilità di instanziare un oggetto potendo variare il numero di parametri d’ingresso), l’override (ovvero la possibilità di modificare il comportamento di un metodo a partire da uno base) e l’interfacciamento con Maven. 
+Come accennato, nella realizzazione sono stati utilizzati alcune caratteristiche della programmazione a oggetti, a partire dalla creazione di classi e relative figlie e metodi, l’overloading (ovvero la possibilità di instanziare un oggetto potendo variare il numero di parametri d’ingresso), l’override (ovvero la possibilità di modificare il comportamento di un metodo a partire da uno base), il polimorifismo (il fatto che un metodo possa cambiare il suo funzionamento a seconda del tipo dell'oggetto a cui si sta interfacciando) e l’interfacciamento con Maven. 
 Nella nostra applicazione, l'ereditarietà è stata implementata, fra gli altri esempi, facendo ereditare dalla classe padre "Persona" le classi "Studente" e "Membro".
 ~~~ java
 public class persona {
