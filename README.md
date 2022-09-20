@@ -110,12 +110,53 @@ Di seguito, un esempio su come vengono prelevati i dati dal file di configurazio
 
 ## Client-Server
 
-Naturalmente il funzionamento dell’applicazione è dipendente da un’architettura client server, dove il Server è la macchina dove giace il Db e che realizza le query, mentre il client può essere una qualsiasi altra macchina tramite la quale lo studente o il membro della segreteria può interagire. Per realizzare ciò, sono stati utilizzati i metodi built-in di java ServerSocket. Viene dunque stabilita una connessione TCP al Server. Per facilità di realizzazione, nel test dell’applicazione il Server e il Client erano la stessa macchina: nel codice, infatti, viene stabilita una connessione all’indirizzo di loopback su due porte differenti. In un utilizzo reale dell’applicazione, è sufficiente modificare l’indirizzo IP al quale connettersi.
+Naturalmente il funzionamento dell’applicazione è dipendente da un’architettura client server, dove il Server è la macchina dove giace il Db e che realizza le query, mentre il client può essere una qualsiasi altra macchina tramite la quale lo studente o il membro della segreteria può interagire. Per realizzare ciò, sono stati utilizzati i metodi built-in di java ServerSocket. Viene dunque stabilita una connessione TCP al Server. Per facilità di realizzazione, nel test dell’applicazione il Server e il Client erano la stessa macchina: nel codice, infatti, viene stabilita una connessione all’indirizzo di loopback su due porte differenti. In un utilizzo reale dell’applicazione, è sufficiente modificare l’indirizzo IP al quale connettersi e la porta alla quale connettersi direttamente dal file di configurazione XML.
 
 ## Multithreading
 
 Per poter permettere a più utenti di usufruite contemporaneamente del servizio, è stato necessario implementare il multithreading. Ogni volta che un nuovo utente si collega, viene creato un thread sulla porta adibita, in maniera che ogni esecuzione sia totalmente indipendente dall’altra per garantire la privacy e il corretto funzionamento. Nell’app ciò è stato realizzato mediante l’interfaccia Runnable. Sarebbe stato possibile estendere la classe Thread ma si è preferito il primo approccio poiché, in futuro, potrebbe essere necessario estendere un’altra classe (Java, infatti, non permette che una classe sia estensione di più classi).
+A seguire, una porzione di codice di esempio su come è stato implementato il multithreading:
 
+### Server
+
+~~~ java
+public class Server {
+    public static void main(String[] args) throws Exception {
+        
+        
+        ...
+            
+            Thread proceduram = new Thread(new proceduraMembro(6869));
+            proceduram.start();
+        }
+    }
+~~~
+
+### Procedura membro
+~~~ java
+public class proceduraMembro implements Runnable{
+    ...
+        public void run(){
+          
+           PrintWriter pw;
+            BufferedReader br;
+            Socket s;
+            boolean flag;
+            while(true){
+            System.out.println("\nIn attesa di connessioni, servizio Membro\n");
+            try{
+            s = ss.accept();
+            flag = true;
+            System.out.println("\nMembro Connesso\n");
+            pw = new PrintWriter(s.getOutputStream(), true);
+            br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+
+            ...
+            
+            }
+      }
+~~~
+Il metodo start() genera un thread e inizia la sua normale procedura di esecuzione, avviando la porzione di codice all'interno del metodo run(), rispettando tutte le fasi di un processo (Create, Ready, Wait, Run, Terminated). In teoria è possibile avviare il codice all'interno di run() direttamente, ma è altamente sconsigliato.
 
 ## UML
 Al fine di dare una panoramica visiva di tutti le classi, i metodi e le dipendenze che costituiscono l’applicazione si è realizzata una rappresentazione in UML mostrata in seguito:
