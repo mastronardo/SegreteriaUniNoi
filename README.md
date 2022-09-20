@@ -79,6 +79,34 @@ Per conservare sia i dati d’accesso degli utenti, sia le richieste effettuate 
 ## XML
 
 Anche per quanto riguarda l’utilizzo di XML si è importata la dependency JDOM, anch’essa presente sul repository Maven. Si è preferito utilizzare JDOM rispetto a DOM e SAX perché esso rappresenta un’evoluzione rispetto agli ultimi due, prendendo il meglio da entrambi per quanto riguarda parsing e ricerca.
+Di seguito, un esempio su come vengono prelevati i dati dal file di configurazione del Database:
+
+~~~ java
+ public static String[] getDbConfiguration() throws JDOMException, IOException{
+        SAXBuilder sax = new SAXBuilder();
+        sax.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+        sax.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+        Document doc = sax.build(new File("src/main/databaseConfiguration.xml"));
+
+        Element rootNode = doc.getRootElement();
+        List<Element> list = rootNode.getChildren("infos");
+        String[] res;
+        res= new String[5];
+        for (Element target : list) {
+            String address = target.getChildText("address");
+            String port = target.getChildText("port");
+            String dbname = target.getChildText("databasename");
+            String user = target.getChildText("username");
+            String pass = target.getChildText("password");
+            res[0]=address;
+            res[1]=port;
+            res[2]=dbname;
+            res[3]=user;
+            res[4]=pass;
+    }
+    return res;
+    }
+~~~
 
 ## Client-Server
 
