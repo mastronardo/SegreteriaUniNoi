@@ -4,7 +4,69 @@ Lo scopo dell’applicazione realizzata è quello di presentare una piattaforma 
 
 ## Programmazione a oggetti
 
-Come accennato, nella realizzazione sono stati utilizzati alcune caratteristiche della programmazione a oggetti, a partire dalla creazione di classi e relative figlie e metodi, l’overloading (ovvero la possibilità di instanziare un oggetto potendo variare il numero di parametri d’ingresso), l’override (ovvero la possibilità di modificare il comportamento di un metodo a partire da uno base) e l’interfacciamento con Maven.
+Come accennato, nella realizzazione sono stati utilizzati alcune caratteristiche della programmazione a oggetti, a partire dalla creazione di classi e relative figlie e metodi, l’overloading (ovvero la possibilità di instanziare un oggetto potendo variare il numero di parametri d’ingresso), l’override (ovvero la possibilità di modificare il comportamento di un metodo a partire da uno base) e l’interfacciamento con Maven. 
+Nella nostra applicazione, l'ereditarietà è stata implementata, fra gli altri esempi, facendo ereditare dalla classe padre "Persona" le classi "Studente" e "Membro".
+~~~ java
+public class persona {
+    private String nome;
+    private String cognome;
+    public studente(String nome, String cognome, int matricola, String password) {
+        super(nome, cognome);
+        this.matricola=matricola;
+        this.password=password;
+    }
+    public studente(String nome, String cognome, String aa, int matricola) {
+        super(nome, cognome);
+        this.matricola=matricola;
+        this.aa=aa;
+    }
+    
+    ...
+    
+    public String getDati(){
+        String res=("LT: Nome: "+ this.getNome() + "  Cognome: "+ this.getCognome());
+        return res;
+    }
+~~~
+
+~~~ java
+public class studente extends persona{
+    private int matricola;
+    private String password;
+    private String aa;
+    
+    ...
+    
+    @Override
+    public String getDati(){
+        String res=(super.getDati()+"   Matricola: "+ this.getMatricola() + "  Anno d'iscrizione: "+ this.getAa());
+        return res;
+    }
+~~~
+~~~ java
+public class membro extends persona{
+     private int codice;
+    private String mansione;
+    public membro (String nome, String cognome, int codice, String mansione){
+        super(nome, cognome);
+        this.codice=codice;
+        this.mansione=mansione;
+    }
+    public membro (String nome, String cognome, int codice){
+        super(nome, cognome);
+        this.codice=codice;
+    }
+    ...
+    
+     @Override
+    public String getDati(){
+        String res=(super.getDati()+"   Codice: "+ this.codice);
+        return res;
+    }
+~~~
+
+Negli snippet di codice sopra, vengono implementati anche Overloading, Override e Polimorfismo. Queste utlime due caratteristiche vengono soddisfatte dal metodo getDati: nel codice sorgente dell'applicazione, in particolare nella procedura membro, all'immissione del comando "Dati" viene caricato un array di tipo Persona con i risultati della query SQL e, successivamente, vengono stampate le informazioni sia degli studenti, che dei membri della segreteria. Il fatto che venga definito un array con la classe padre permette di implementare il polimorfismo: infatti viene sempre richiamato il metodo getDati() e, senza specificare il tipo dell'oggetto processato in quell'istante, è in grado di stampare le informazioni relative a quello studente o a quel membro.
+
 
 ## Maven
 
