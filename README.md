@@ -111,6 +111,41 @@ Di seguito, un esempio su come vengono prelevati i dati dal file di configurazio
 ## Client-Server
 
 Naturalmente il funzionamento dell’applicazione è dipendente da un’architettura client server, dove il Server è la macchina dove giace il Db e che realizza le query, mentre il client può essere una qualsiasi altra macchina tramite la quale lo studente o il membro della segreteria può interagire. Per realizzare ciò, sono stati utilizzati i metodi built-in di java ServerSocket. Viene dunque stabilita una connessione TCP al Server. Per facilità di realizzazione, nel test dell’applicazione il Server e il Client erano la stessa macchina: nel codice, infatti, viene stabilita una connessione all’indirizzo di loopback su due porte differenti. In un utilizzo reale dell’applicazione, è sufficiente modificare l’indirizzo IP al quale connettersi e la porta alla quale connettersi direttamente dal file di configurazione XML.
+Di importanza fondamentale è prevedere una corretta routine di funzionamento del Client rispetto alle azioni del Server: perché l'app funzioni a dovere, è necessario che ad ogni input del Client corrisponda l'attesa di un input da parte del Server, e così per ogni tipo di interazione.
+A seguire un breve esempio della routine di funzionamento del Client:
+~~~ java
+public class Client {
+    private Socket s;
+    public Client (String ip, int porta) throws IOException{
+        s =new Socket(ip, porta);
+        System.out.println(("Connesso"));
+    }
+
+public void inizio() throws Exception{
+    PrintStream ps;
+    BufferedReader br;
+    Scanner sc = new Scanner(System.in);
+    String msg="null";
+    String comando;
+    boolean flag= true;
+    ps = new PrintStream(s.getOutputStream(),true);
+    br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+    while(flag){
+        msg=null;
+            msg=br.readLine();
+            ...
+            
+            else if(msg.startsWith("LT: ")){
+               msg=msg.substring(4);
+                System.out.println(msg);}
+        }
+    ps.close();
+    br.close();
+    s.close();
+
+ }
+}
+~~~
 
 ## Multithreading
 
