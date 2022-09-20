@@ -75,6 +75,52 @@ La possibilità più importante della programmazione a oggetti è sicuramente qu
 ## Database
 
 Per conservare sia i dati d’accesso degli utenti, sia le richieste effettuate e le relative risposte, si è deciso di utilizzare un semplice database relazionale, di tipo MySQL o MariaDB. L’interfacciamento con Java è stato reso agevole dal driver JDBC, messo a disposizione da Oracle sul repository ufficiale di Maven. Nello specifico, si è instanziato un database in locale, in maniera da facilitare e velocizzare le operazioni. Viene anche utilizzato un file di configurazione XML dove sono stati inseriti i parametri per potersi interfacciare al Database. Ciò è stato fatto per poter utilizzare un qualsiasi Database (e di conseguenza cambiarlo) senza dover modificare il codice Java, per una maggiore sicurezza.
+Di seguito il codice usato per la connessione al Db ed un esempio di query.
+~~~ java
+
+public class dbconnection {
+
+    public static Statement connettiti() throws Exception{
+    String[] conf;
+    conf=new String[5];
+    conf=xmlHandler.getDbConfiguration();
+    String address=conf[0].trim();
+    String portS=conf[1].trim();
+    int port = Integer.parseInt(portS);
+    String dbname=conf[2].trim();
+    String user=conf[3].trim();
+    String pass=conf[4].trim();
+    Class.forName("com.mysql.cj.jdbc.Driver");
+                        Connection conn = DriverManager.getConnection("jdbc:mysql://"+address+":"+port+"/"+dbname+"", ""+user+"", ""+pass+"");
+                        Statement st = conn.createStatement();
+                        return st;
+                    }
+    
+}
+
+~~~
+
+~~~ java
+
+...
+
+try {
+            LocalDate data = LocalDate.now();
+            Statement stt = dbconnection.connettiti();
+            stt.executeUpdate("INSERT INTO Richieste (richiesta, matricola, codice, giorno) " +
+            "VALUES ('" + richiesta + "', '" + mat + "', '"+codice+" ', '" + data + "')");
+            
+            pw.println("NO: Richiesta effettuata correttamente");
+            pw.flush();
+                                                                        
+            } catch (Exception ee) {
+            ee.printStackTrace();
+            pw.println("C'è stato un problema di connessione, riavviare");
+}
+            
+...
+
+~~~
 
 ## XML
 
